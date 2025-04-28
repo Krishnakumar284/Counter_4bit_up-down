@@ -42,7 +42,8 @@ Functional Simulation:
       
 	After this you can see the window like below 
 
-![Screenshot 2025-04-24 104957](https://github.com/user-attachments/assets/7a8be9b8-f397-42de-9c5f-5d251c44bfd8)
+![Screenshot 2025-04-28 152411](https://github.com/user-attachments/assets/6803b288-682c-4305-b381-91e1b9de75eb)
+
 
 
 
@@ -58,9 +59,22 @@ Functional Simulation:
 (Note : File name should be with HDL Extension)
 
 ### Verilog code for 4-Bit Up-Down Counter:
-
-*/Program  for  4-Bit Up-Down Counter
-
+~~~
+`timescale 1ns/1ns
+module counter(clk,m,rst,count);
+input clk,m,rst;
+output reg [3:0] count;
+always@(posedge clk or negedge rst)
+begin
+if (!rst)
+count=0;
+else if(m)
+count=count+1;
+else
+count=count-1;
+end
+endmodule
+~~~
 	Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
 
 ## Creating Test bench:
@@ -69,9 +83,29 @@ Functional Simulation:
 
 
 ### Test-bench code for 4-Bit Up-Down Counter:
-
-*/Test bench Program  for  4-Bit Up-Down Counter
-
+~~~
+`timescale 1ns/1ns
+module counter_test;
+reg clk,rst,m;
+wire [3:0] count;
+initial
+begin
+clk=0;
+rst=0;#5;
+rst=1;
+end
+initial
+begin
+m=1;
+#160 m=0;
+end
+counter dut(clk,m,rst,count);
+always #5 clk=~clk;
+initial $monitor("Time=%t rst=%b clk=%b count=%b" , $time,rst,clk,count);
+initial
+#320 $finish;
+endmodule
+~~~
 ### To Launch Simulation tool
 	linux:/> nclaunch -new&            // “-new” option is used for invoking NCVERILOG for the first time for any design
 
@@ -79,7 +113,8 @@ Functional Simulation:
 
 It will invoke the nclaunch window for functional simulation we can compile,elaborate and simulate it using Multiple step
 
-![Screenshot 2025-04-24 104245](https://github.com/user-attachments/assets/63a91952-041b-4327-8a0e-755fdab3ae13)
+![Screenshot 2025-04-28 152458](https://github.com/user-attachments/assets/84b2eecd-8602-469a-a21c-5540142faf4c)
+
 
 
 ## Fig 3: Setting Multi-step simulation
@@ -88,7 +123,8 @@ Select Multiple Step and then select “Create cds.lib File” as shown in below
 
 Click the cds.lib file and save the file by clicking on Save option
 
-![Screenshot 2025-04-24 105224](https://github.com/user-attachments/assets/f98d7205-f224-48b4-8c2c-bd929d98e966)
+![Screenshot 2025-04-28 152538](https://github.com/user-attachments/assets/671b6ecd-dd2f-40b8-8c3b-da31c2b444b6)
+
 
 
 ## Fig 4: cds.lib file Creation
@@ -109,7 +145,8 @@ Click the cds.lib file and save the file by clicking on Save option
 
 	Worklib is the directory where all the compiled codes are stored while Snapshot will have output of elaboration which in turn goes for simulation
 
-![Screenshot 2025-04-24 105355](https://github.com/user-attachments/assets/f95557e3-5ebb-456f-a71d-d8a213560400)
+![Screenshot 2025-04-28 152816](https://github.com/user-attachments/assets/46557b0b-0d92-4c3e-9cb1-5e92bc65e1fe)
+
 
 
 ## Fig 6: Nclaunch Window
@@ -136,7 +173,8 @@ i.e Cadence IES command for compile: ncverilog +access+rwc -compile fa.v
 
 Worklib is the directory where all the compiled codes are stored while Snapshot will have output of elaboration which in turn goes for simulation 
 
-![Screenshot 2025-04-24 105858](https://github.com/user-attachments/assets/2c90a4e3-34cd-4b47-a854-d5646d766326)
+![Screenshot 2025-04-28 152849](https://github.com/user-attachments/assets/d46cdf62-9336-4107-a09d-20d3856558c0)
+
 
 
 ## Fig 7: Compiled database in worklib
@@ -167,7 +205,7 @@ It contains statements that map logical library names to their physical director
 9.	It also establishes net connectivity and prepares all of this for simulation
     
 	After elaboration the file will come under snapshot. Select the test bench and simulate it. 
-![Screenshot 2025-04-24 105622](https://github.com/user-attachments/assets/cd61146a-c2fe-43c0-8c87-312faaa2f21b)
+
 
 
 ## Fig 8: Elaboration Launch Option
@@ -182,18 +220,23 @@ It contains statements that map logical library names to their physical director
 
 	Steps for simulation – Run the simulation command with simulator options
 
-![Screenshot 2025-04-24 110654](https://github.com/user-attachments/assets/72fc87b4-9fb9-45d7-aa71-cbc8a59b101c)
+![Screenshot 2025-04-28 153050](https://github.com/user-attachments/assets/a698aa9e-7572-476f-a8b3-d3c030f63b00)
+
 
 
 ## Fig 9: Design Browser window for simulation
-![Screenshot 2025-04-24 111012](https://github.com/user-attachments/assets/7a94182c-640d-44f7-96f1-38a01f3e7148)
+![Screenshot 2025-04-28 153147](https://github.com/user-attachments/assets/097fe1a4-f89a-4e6d-8cdf-9ef5b862e758)
+
 
 
 ## Fig 10: Simulation Waveform Window
-![Screenshot 2025-04-24 111102](https://github.com/user-attachments/assets/b3e9e1f1-25b3-485e-897a-77f63318e847)
+![Screenshot 2025-04-28 153205](https://github.com/user-attachments/assets/edd44e0d-8a40-42c4-807a-7e111185a0a8)
+
 
 
 ## Fig 11: Simulation Waveform Window
+![Screenshot 2025-04-28 153205](https://github.com/user-attachments/assets/767bb66d-cb0d-4ecb-8cb3-c5ac93f34355)
+
 
 ### Result
 
